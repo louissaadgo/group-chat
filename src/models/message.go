@@ -1,8 +1,10 @@
 package models
 
 type Message struct {
-	Name    string `json:"name"`
-	Message string `json:"message"`
+	Type    string   `json:"type"`
+	Name    string   `json:"name"`
+	Message string   `json:"message"`
+	Users   []string `json:"users"`
 }
 
 func (message Message) Validate() bool {
