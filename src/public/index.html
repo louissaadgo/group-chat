@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
   socket.onmessage = msg => {
       let data = JSON.parse(msg.data);
-      console.log(data)
       switch (data.type) {
           case "users_list":
               let ul = document.getElementById("online_users");

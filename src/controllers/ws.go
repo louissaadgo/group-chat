@@ -14,7 +14,7 @@ var users = []string{}
 func RegisterWSEvents() {
 
 	ikisocket.On(ikisocket.EventConnect, func(ep *ikisocket.EventPayload) {
-		fmt.Printf("Connection - User: %s\n", ep.SocketUUID)
+		fmt.Printf("New Connection:\nUserUUID: %s\n", ep.SocketUUID)
 	})
 
 	ikisocket.On(ikisocket.EventMessage, func(ep *ikisocket.EventPayload) {
