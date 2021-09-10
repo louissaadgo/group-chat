@@ -98,15 +98,15 @@ document.addEventListener("DOMContentLoaded", function(){
                   })
               }
               break;
-          case "broadcast":
+          case "message":
               o.innerHTML = o.innerHTML + data.message + "<br>";
               break;
       }
   }
   userField.addEventListener("change", function(){
       let jsonData = {};
-      jsonData["action"] = "username";
-      jsonData["username"] = this.value;
+      jsonData["type"] = "change_name";
+      jsonData["name"] = this.value;
       socket.send(JSON.stringify(jsonData));
   })
   messageField.addEventListener("keydown", function(event){
@@ -136,8 +136,8 @@ document.addEventListener("DOMContentLoaded", function(){
 })
 function sendMessage(){
   let jsonData = {};
-  jsonData["action"] = "broadcast";
-  jsonData["username"] = userField.value;
+  jsonData["type"] = "message";
+  jsonData["name"] = userField.value;
   jsonData["message"] = messageField.value;
   socket.send(JSON.stringify(jsonData));
   messageField.value = "";

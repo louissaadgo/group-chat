@@ -18,11 +18,39 @@ func RegisterWSEvents() {
 	})
 
 	ikisocket.On(ikisocket.EventMessage, func(ep *ikisocket.EventPayload) {
-		fmt.Printf("Message event - User: %s - Message: %s", ep.Kws.GetStringAttribute("user_id"), string(ep.Data))
 		message := models.Message{}
 		err := json.Unmarshal(ep.Data, &message)
 		if err != nil {
 			fmt.Println(err)
+			return
+		}
+		if message.Type == "change_name" {
+			user := clients[ep.SocketUUID]
+			for i := 0; i < len(users); i++ {
+				if user == users[i] {
+					users = append(users[:i], users[i+1:]...)
+				}
+			}
+			clients[ep.SocketUUID] = message.Name
+			users = append(users, clients[ep.SocketUUID])
+			response := models.Message{
+				Type:  "users_list",
+				Users: users,
+			}
+
+			sb, _ := json.Marshal(response)
+
+			ep.Kws.Broadcast(sb, false)
+			return
+		}
+		if message.Type == "message" {
+			response := models.Message{
+				Type:    "message",
+				Message: fmt.Sprintf("<strong>%s</strong>: %s", message.Name, message.Message),
+			}
+			sb, _ := json.Marshal(response)
+
+			ep.Kws.Broadcast(sb, false)
 			return
 		}
 	})
