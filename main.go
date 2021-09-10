@@ -1,11 +1,21 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	app := fiber.New()
 
 	app.Use("/ws", func(c *fiber.Ctx) error {
@@ -16,5 +26,5 @@ func main() {
 		return fiber.ErrUpgradeRequired
 	})
 
-	app.Listen(":3000")
+	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }
