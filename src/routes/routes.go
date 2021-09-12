@@ -9,6 +9,14 @@ import (
 
 func Setup(app *fiber.App) {
 
+	app.Static("/public", "./src/public")
+
+	app.Use(middlewares.IsAuthenticated)
+
+	app.Get("/login", func(c *fiber.Ctx) error {
+		return c.Render("login", fiber.Map{})
+	})
+
 	app.Use("/ws", middlewares.UpgradeToWS)
 
 	controllers.RegisterWSEvents()
