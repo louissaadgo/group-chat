@@ -11,11 +11,11 @@ func Setup(app *fiber.App) {
 
 	app.Static("/public", "./src/public")
 
-	app.Use(middlewares.IsAuthenticated)
+	app.Get("/login", controllers.RenderLogin)
 
-	app.Get("/login", func(c *fiber.Ctx) error {
-		return c.Render("login", fiber.Map{})
-	})
+	app.Get("/register", controllers.RenderRegister)
+
+	app.Use(middlewares.IsAuthenticated)
 
 	app.Use("/ws", middlewares.UpgradeToWS)
 
