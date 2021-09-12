@@ -12,6 +12,7 @@ func Setup(app *fiber.App) {
 	app.Static("/public", "./src/public")
 
 	app.Get("/login", controllers.RenderLogin)
+	app.Post("/login", controllers.Login)
 
 	app.Get("/register", controllers.RenderRegister)
 
