@@ -1,86 +1,313 @@
-<!docType html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.css" integrity="sha512-UrjLcAek5jbj1vwGbXkviPHtgSNVNQCedX7cBIMDdSI2iZtUcZcoTh2Sqc8R9mVcijOjFUi1IlxhfrE1uWaIog==" crossorigin="anonymous" />
-    <style>
-        .chatbox { 
-    outline: 1px solid silver;
-    min-height: 160px;
-    padding: 0.5em;
-}
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Chat Application - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="./public/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="./public/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/core/menu/menu-types/horizontal-menu.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/pages/app-chat.css">
+    <link rel="stylesheet" type="text/css" href="./public/app-assets/css/pages/app-chat-list.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="./public/assets/css/style.css">
+    <!-- END: Custom CSS-->
+
 </head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1 class="mt-3">This is the Home Page</h1>
-            <hr>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class=" horizontal-menu content-left-sidebar navbar-floating footer-static  " data-open="hover" data-menu="horizontal-menu" data-col="content-left-sidebar">
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content chat-application">
+        <div class="content-overlay"></div>
+        <div class="content-area-wrapper container-xxl p-0">
+            <div class="sidebar-left">
+                <div class="sidebar">
+                    <!-- Admin user profile area -->
+                    <div class="chat-profile-sidebar">
+                        <header class="chat-profile-header">
+                            <span class="close-icon">
+                                <i data-feather="x"></i>
+                            </span>
+                            <!-- User Information -->
+                            <div class="header-profile-sidebar">
+                                <div class="avatar box-shadow-1 avatar-xl avatar-border">
+                                    <img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="user_avatar" />
+                                    <span class="avatar-status-online avatar-status-xl"></span>
+                                </div>
+                                <h4 class="chat-user-name">Louis Saad</h4>
+                                <span class="user-post">@louissaad</span>
+                            </div>
+                            <!--/ User Information -->
+                        </header>
+                        <!-- User Details start -->
+                        <div class="profile-sidebar-area">
+                            <!-- To set user status -->
+                            <h6 class="section-label mb-1 mt-3">Status</h6>
+                            <ul class="list-unstyled user-status">
+                                <li class="pb-1">
+                                    <div class="form-check form-check-success">
+                                        <input type="radio" id="activeStatusRadio" name="userStatus" class="form-check-input" value="online" checked />
+                                        <label class="form-check-label ms-25" for="activeStatusRadio">Active</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--/ To set user status -->
+
+                            <!-- User settings -->
+                            <h6 class="section-label mb-1 mt-2">Settings</h6>
+                            <ul class="list-unstyled">
+                                <li class="d-flex align-items-center cursor-pointer">
+                                    <i data-feather="trash" class="me-75 font-medium-3"></i>
+                                    <span class="align-middle">Delete Account (Coming Soon)</span>
+                                </li>
+                            </ul>
+                            <!--/ User settings -->
+
+                            <!-- Logout Button -->
+                            <div class="mt-3">
+                                <button class="btn btn-primary">
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                            <!--/ Logout Button -->
+                        </div>
+                        <!-- User Details end -->
+                    </div>
+                    <!--/ Admin user profile area -->
+
+                    <!-- Chat Sidebar area -->
+                    <div class="sidebar-content">
+                        <span class="sidebar-close-icon">
+                            <i data-feather="x"></i>
+                        </span>
+                        <!-- Sidebar header start -->
+                        <div class="chat-fixed-search">
+                            <div class="d-flex align-items-center w-100">
+                                <div class="sidebar-profile-toggle">
+                                    <div class="avatar avatar-border">
+                                        <img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="user_avatar" height="42" width="42" />
+                                        <span class="avatar-status-online"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group input-group-merge ms-1 w-100">
+                                    <span class="input-group-text round"><i data-feather="search" class="text-muted"></i></span>
+                                    <input type="text" class="form-control round" id="chat-search" placeholder="Search for users" aria-label="Search..." aria-describedby="chat-search" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sidebar header end -->
+
+                        <!-- Sidebar Users start -->
+                        <div id="users-list" class="chat-user-list-wrapper list-group">
+                            <h4 class="chat-list-title">Users</h4>
+                            <ul class="chat-users-list chat-list media-list" id="online_users">
+                                <li>
+                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" height="42" width="42" alt="Generic placeholder image" />
+                                        <span class="avatar-status-online"></span>
+                                    </span>
+                                    <div class="chat-info flex-grow-1">
+                                        <h5 class="mb-0">Louis Saad</h5>
+                                        <p class="card-text text-truncate">
+                                            @louissaad
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" height="42" width="42" alt="Generic placeholder image" />
+                                        <span class="avatar-status-busy"></span>
+                                    </span>
+                                    <div class="chat-info flex-grow-1">
+                                        <h5 class="mb-0">Mido</h5>
+                                        <p class="card-text text-truncate">
+                                            @mido
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="no-results">
+                                    <h6 class="mb-0">No Users Found</h6>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Sidebar Users end -->
+                    </div>
+                    <!--/ Chat Sidebar area -->
+
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-wrapper container-xxl p-0">
+                    <div class="content-header row">
+                    </div>
+                    <div class="content-body">
+                        <div class="body-content-overlay"></div>
+                        <!-- Main chat area -->
+                        <section class="chat-app-window">
+                            <!-- Active Chat -->
+                            <div class="active-chat">
+                                <!-- Chat Header -->
+                                <div class="chat-navbar">
+                                    <header class="chat-header">
+                                        <div class="d-flex align-items-center">
+                                            <div class="sidebar-toggle d-block d-lg-none me-1">
+                                                <i data-feather="menu" class="font-medium-5"></i>
+                                            </div>
+                                            <h6 class="mb-0">GENERAL CHAT</h6>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown">
+                                                <button class="btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i data-feather="more-vertical" id="chat-header-actions" class="font-medium-2"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="chat-header-actions">
+                                                    <a class="dropdown-item" href="#">Clear Chat</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </header>
+                                </div>
+                                <!--/ Chat Header -->
+
+                                <!-- User Chat messages -->
+                                <div class="user-chats">
+                                    <div class="chats">
+                                        <div class="chat"> 
+                                            <div class="chat-body">
+                                                <div class="chat-content">
+                                                    <p>Hi MIDO I love you! 😄</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chat">
+                                            <div class="chat-body">
+                                                <div class="chat-content">
+                                                    <p>Would You marry me?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chat chat-left">
+                                            <div class="chat-avatar">
+                                                <span class="avatar box-shadow-1 cursor-pointer">
+                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
+                                                </span>
+                                            </div>
+                                            <div class="chat-body">
+                                                <div class="chat-content">
+                                                    <p><strong>@mido: </strong> YESSSSS :)</p>
+                                                    <p>I LOVE YOUU SO MUCH</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chat chat-left">
+                                            <div class="chat-avatar">
+                                                <span class="avatar box-shadow-1 cursor-pointer">
+                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
+                                                </span>
+                                            </div>
+                                            <div class="chat-body">
+                                                <div class="chat-content">
+                                                    <p><strong>@mido: </strong> But i have a bf</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chat">
+                                            <div class="chat-body">
+                                                <div class="chat-content">
+                                                    <p>Dont worry abt him :)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <!-- User Chat messages -->
+
+                                <!-- Submit Chat form -->
+                                <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
+                                    <div class="input-group input-group-merge me-1 form-send-message">
+                                        <input type="text" class="form-control message" placeholder="Type your message here." />
+                                    </div>
+                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
+                                        <i data-feather="send" class="d-lg-none"></i>
+                                        <span class="d-none d-lg-block">Send</span>
+                                    </button>
+                                </form>
+                                <!--/ Submit Chat form -->
+                            </div>
+                            <!--/ Active Chat -->
+                        </section>
+                        <!--/ Main chat area -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Chat</h3>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" class="form-control" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="message">Message:</label>
-                <input type="text" name="message" id="message" class="form-control" autocomplete="off">
-            </div>
-            <hr>
-            <a href="javascript:void(0);" class="btn btn-outline-secondary" id="sendBtn">Send message</a>
-            <input type="hidden" name="action" id="action">
-            <div id ="status" class="mt-2 float-end">
-            
-            </div>
-            <div id="output" class="chatbox mt-3">
+    <!-- END: Content-->
 
-            </div>
-        </div>
-        <div class="col-md-4">
-            <h3>Who's Online</h3>
-            <ul id="online_users">
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
 
-            </ul>
-        </div>
-    </div>
-</div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.js" integrity="sha512-NHRCwRf2LnVSlLDejCA9oS3fG3/FLSQIPCjAWl3M7tVi5wszwr6FxkjotWnQDXLE+aLKcxRrzFDNEgXj9nvkPw==" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-<script>
-    let socket = null;
-let o = document.getElementById("output");
-let userField = document.getElementById("username");
-let messageField = document.getElementById("message");
-window.onbeforeunload = function(){
-  let jsonData = {};
-  jsonData["action"] = "left";
-  socket.send(JSON.stringify(jsonData));
-}
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021<a class="ms-25" target="_blank">LouisSaad</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
 
-document.addEventListener("DOMContentLoaded", function(){
-  socket = new WebSocket("ws://127.0.0.1:3000/ws");
-  const offline = `<span class="badge bg-danger">Disconnected</span>`;
-  const online = `<span class="badge bg-success">Connected</span>`;
-  let statusDiv = document.getElementById("status");
-  socket.onopen = () => {
-    console.log("Success connect");
-    statusDiv.innerHTML = online;
-  }
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="./public/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="./public/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="./public/app-assets/js/core/app-menu.js"></script>
+    <script src="./public/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="./public/app-assets/js/scripts/pages/app-chat.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        let socket = null;
+        document.addEventListener("DOMContentLoaded", function(){
+  socket = new WebSocket("ws://"+ window.location.host + "/ws");
+
   socket.onclose = () => {
       console.log("Connection closed");
-      statusDiv.innerHTML = offline;
   }
-
   socket.onerror = error => {
       console.log("There was an error");
-      statusDiv.innerHTML = offline;
   }
 
   socket.onmessage = msg => {
@@ -92,7 +319,33 @@ document.addEventListener("DOMContentLoaded", function(){
               if (data.users.length > 0){
                   data.users.forEach(function(item){
                       let li = document.createElement("li");
-                      li.appendChild(document.createTextNode(item));
+                      let span = document.createElement("span");
+                      span.classList.add("avatar");
+                      let img = document.createElement("img");
+                      img.src = "./public/app-assets/images/portrait/small/avatar-s-11.jpg";
+                      img.height = 42;
+                      img.width =42;
+                      let span2 = document.createElement("span");
+                      let status;
+                      if (item.status === "online") {
+                          status = "avatar-status-online";
+                      }else {
+                          status = "avatar-status-busy";
+                      }
+                      span2.classList.add(status);
+                      span.append(img,span2);
+                      let div = document.createElement("div");
+                      div.classList.add("chat-info");
+                      div.classList.add("flex-grow-1")
+                      let h5 = document.createElement("h5");
+                      h5.classList.add("mb-0");
+                      h5.innerText = item.fullname;
+                      let p = document.createElement("p");
+                      p.classList.add("card-text");
+                      p.classList.add("text-truncate");
+                      p.innerText = "@" + item.username;
+                      div.append(h5,p);
+                      li.append(span,div);
                       ul.appendChild(li);
                   })
               }
@@ -133,19 +386,16 @@ document.addEventListener("DOMContentLoaded", function(){
       }
   })
 })
-function sendMessage(){
-  let jsonData = {};
-  jsonData["type"] = "message";
-  jsonData["name"] = userField.value;
-  jsonData["message"] = messageField.value;
-  socket.send(JSON.stringify(jsonData));
-  messageField.value = "";
-}
-function errorMessage(msg){
-  notie.alert({
-      type: 'error',
-      text: msg,
-  })
-}
-</script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+</body>
+<!-- END: Body-->
+
 </html>

@@ -9,7 +9,8 @@ import (
 )
 
 var clients = make(map[string]string)
-var users = []string{}
+
+var Users = []models.User{}
 
 func RegisterWSEvents() {
 
@@ -24,49 +25,31 @@ func RegisterWSEvents() {
 			fmt.Println(err)
 			return
 		}
-		if message.Type == "change_name" {
-			user := clients[ep.SocketUUID]
-			for i := 0; i < len(users); i++ {
-				if user == users[i] {
-					users = append(users[:i], users[i+1:]...)
-				}
-			}
-			clients[ep.SocketUUID] = message.Name
-			users = append(users, clients[ep.SocketUUID])
-			response := models.Message{
-				Type:  "users_list",
-				Users: users,
-			}
-
-			sb, _ := json.Marshal(response)
-
-			ep.Kws.Broadcast(sb, false)
-			return
-		}
 		if message.Type == "message" {
 			response := models.Message{
-				Type:    "message",
-				Message: fmt.Sprintf("<strong>%s</strong>: %s", message.Name, message.Message),
+				Type:     "message",
+				Message:  message.Message,
+				Username: clients[ep.SocketUUID],
 			}
 			sb, _ := json.Marshal(response)
 
-			ep.Kws.Broadcast(sb, false)
+			ep.Kws.Broadcast(sb, true)
 			return
 		}
 	})
 
 	ikisocket.On(ikisocket.EventDisconnect, func(ep *ikisocket.EventPayload) {
-		user := clients[ep.SocketUUID]
-		for i := 0; i < len(users); i++ {
-			if user == users[i] {
-				users = append(users[:i], users[i+1:]...)
+		username := clients[ep.SocketUUID]
+		for in, i := range Users {
+			if i.Username == username {
+				Users[in].Status = "offline"
 			}
 		}
 		delete(clients, ep.SocketUUID)
 
 		message := models.Message{
 			Type:  "users_list",
-			Users: users,
+			Users: Users,
 		}
 
 		sb, _ := json.Marshal(message)
@@ -74,17 +57,17 @@ func RegisterWSEvents() {
 	})
 
 	ikisocket.On(ikisocket.EventClose, func(ep *ikisocket.EventPayload) {
-		user := clients[ep.SocketUUID]
-		for i := 0; i < len(users); i++ {
-			if user == users[i] {
-				users = append(users[:i], users[i+1:]...)
+		username := clients[ep.SocketUUID]
+		for in, i := range Users {
+			if i.Username == username {
+				Users[in].Status = "offline"
 			}
 		}
 		delete(clients, ep.SocketUUID)
 
 		message := models.Message{
 			Type:  "users_list",
-			Users: users,
+			Users: Users,
 		}
 
 		sb, _ := json.Marshal(message)
@@ -100,12 +83,16 @@ func RegisterWSEvents() {
 
 func WS(kws *ikisocket.Websocket) {
 
-	clients[kws.UUID] = kws.UUID
-	users = append(users, clients[kws.UUID])
-
+	clients[kws.UUID] = kws.Cookies("token")
+	for in, i := range Users {
+		if i.Username == kws.Cookies("token") {
+			Users[in].Status = "online"
+		}
+	}
+	fmt.Println(Users)
 	message := models.Message{
 		Type:  "users_list",
-		Users: users,
+		Users: Users,
 	}
 
 	sb, _ := json.Marshal(message)
