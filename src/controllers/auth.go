@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/louissaadgo/group-chat/src/models"
 )
@@ -50,4 +52,15 @@ func Register(c *fiber.Ctx) error {
 	}
 	c.Status(400)
 	return c.JSON(user)
+}
+
+func Logout(c *fiber.Ctx) error {
+	c.Cookie(&fiber.Cookie{
+		Name:    "token",
+		Value:   "",
+		Expires: time.Now().Add(-time.Minute),
+	})
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
 }

@@ -92,7 +92,7 @@
 
                             <!-- Logout Button -->
                             <div class="mt-3">
-                                <button class="btn btn-primary">
+                                <button id="logout" class="btn btn-primary">
                                     <span>Logout</span>
                                 </button>
                             </div>
@@ -171,53 +171,17 @@
 
                                 <!-- User Chat messages -->
                                 <div class="user-chats">
-                                    <div class="chats">
-                                        <div class="chat"> 
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Hi MIDO I love you! 😄</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Would You marry me?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">                
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p><strong>@mido: </strong> YESSSSS :)</p>
-                                                    <p>I LOVE YOUU SO MUCH</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p><strong>@mido: </strong> But i have a bf</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Dont worry abt him :)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
+                                    <div class="chats" id="chats">   
+                                     </div>
                                 </div>
                                 <!-- User Chat messages -->
 
                                 <!-- Submit Chat form -->
                                 <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
                                     <div class="input-group input-group-merge me-1 form-send-message">
-                                        <input type="text" class="form-control message" placeholder="Type your message here." />
+                                        <input id="msg-field" type="text" class="form-control message" placeholder="Type your message here." />
                                     </div>
-                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
+                                    <button type="button" class="btn btn-primary send" id="sendBtn">
                                         <i data-feather="send" class="d-lg-none"></i>
                                         <span class="d-none d-lg-block">Send</span>
                                     </button>
@@ -264,6 +228,7 @@
 
     <script>
         let socket = null;
+        let messageField = document.getElementById("msg-field");
         document.addEventListener("DOMContentLoaded", function(){
   socket = new WebSocket("ws://"+ window.location.host + "/ws");
 
@@ -315,24 +280,19 @@
               }
               break;
           case "message":
-              o.innerHTML = o.innerHTML + data.message + "<br>";
+            let chats = document.getElementById("chats");
+             let htmln = '<div class="chat chat-left"><div class="chat-body"><div class="chat-content"><p><strong>@'+ data.username +': </strong>'+ data.message +'</p></div></div></div>'
+              chats.innerHTML = chats.innerHTML + htmln;
+              $('.user-chats').scrollTop($('.user-chats > .chats').height());
               break;
       }
   }
-  userField.addEventListener("change", function(){
-      let jsonData = {};
-      jsonData["type"] = "change_name";
-      jsonData["name"] = this.value;
-      socket.send(JSON.stringify(jsonData));
-  })
   messageField.addEventListener("keydown", function(event){
       if (event.code == "Enter"){
           if (!socket){
               console.log("No connection");
               return false
-          }
-          if(userField.value === "" || messageField.value === ""){
-          errorMessage("Fill out username and message");
+          }if(messageField.value === ""){
           return false;
       }else{
           sendMessage()
@@ -342,13 +302,33 @@
       }
   })
   document.getElementById("sendBtn").addEventListener("click", function(){
-      if(userField.value === "" || messageField.value === ""){
-          errorMessage("Fill out username and message");
+      if(messageField.value === ""){
           return false;
       }else{
           sendMessage()
       }
   })
+  document.getElementById("logout").addEventListener("click", function(){
+    const Url = window.location.origin + '/logout';
+            const otheParm={
+                method:"GET"
+            };
+            fetch(Url,otheParm)
+            .then(res=>{
+                location.href = window.location.origin + "/login";
+                return
+            })
+  })
+  function sendMessage(){
+    let htmln = '<div class="chat"><div class="chat-body"><div class="chat-content"><p>'+ messageField.value+'</p></div></div></div>'
+        chats.innerHTML = chats.innerHTML + htmln;
+        $('.user-chats').scrollTop($('.user-chats > .chats').height());
+  let jsonData = {};
+  jsonData["type"] = "message";
+  jsonData["message"] = messageField.value;
+  socket.send(JSON.stringify(jsonData));
+  messageField.value = "";
+}
 })
         $(window).on('load', function() {
             let ele = document.getElementById("username-display");
