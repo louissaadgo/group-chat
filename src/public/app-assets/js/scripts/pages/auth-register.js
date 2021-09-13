@@ -43,7 +43,7 @@ $(function () {
           required: true
         },
         'register-email': {
-          required: true
+          required: true,
         },
         'register-password': {
           required: true

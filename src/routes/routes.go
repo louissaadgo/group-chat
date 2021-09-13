@@ -15,6 +15,7 @@ func Setup(app *fiber.App) {
 	app.Post("/login", controllers.Login)
 
 	app.Get("/register", controllers.RenderRegister)
+	app.Post("/register", controllers.Register)
 
 	app.Use(middlewares.IsAuthenticated)
 

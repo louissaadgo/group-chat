@@ -74,7 +74,7 @@
                                             <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-100" tabindex="4">Sign in</button>
+                                    <button id="signin_button" class="btn btn-primary w-100" tabindex="4">Sign in</button>
                                 </form>
 
                                 <p class="text-center mt-2">
@@ -114,6 +114,8 @@
     <!-- END: Page JS-->
 
     <script>
+        let usernames = document.getElementById("login-email");
+        let passwords = document.getElementById("login-password");
         $(window).on('load', function() {
             if (feather) {
                 feather.replace({
@@ -122,6 +124,33 @@
                 });
             }
         })
+
+        document.getElementById("signin_button").addEventListener("click",function(event){
+            event.preventDefault();
+            const Url = window.location.origin + '/login';
+            const Data = {
+                username: usernames.value,
+                password: passwords.value
+            }
+            console.log(Data)
+            const otheParm={
+                headers:{
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(Data),
+                method:"POST"
+            };
+            fetch(Url,otheParm)
+            .then(res=>{
+                if (res.status === 400) {
+                    usernames.value = "";
+                    passwords.value = "";
+                    return
+                }
+                location.href = window.location.origin + "/";
+                return
+            })
+        });
     </script>
 </body>
 <!-- END: Body-->

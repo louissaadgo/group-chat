@@ -77,7 +77,7 @@
                                             <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-100" tabindex="5">Sign up</button>
+                                    <button class="btn btn-primary w-100" id="register-button" tabindex="5">Sign up</button>
                                 </form>
 
                                 <p class="text-center mt-2">
@@ -117,6 +117,9 @@
     <!-- END: Page JS-->
 
     <script>
+        let fullname = document.getElementById("register-username");
+        let username = document.getElementById("register-email");
+        let password = document.getElementById("register-password");
         $(window).on('load', function() {
             if (feather) {
                 feather.replace({
@@ -125,6 +128,35 @@
                 });
             }
         })
+
+        document.getElementById("register-button").addEventListener("click",function(event){
+            event.preventDefault();
+            const Url = window.location.origin + '/register';
+            const Data = {
+                fullname : fullname.value,
+                username: username.value,
+                password: password.value
+            }
+            const otheParm={
+                headers:{
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(Data),
+                method:"POST"
+            };
+            fetch(Url,otheParm)
+            .then(res=>{
+                console.log(res)
+                if (res.status === 400) {
+                    fullname.value = "";
+                    username.value = "";
+                    password.value = "";
+                    return
+                }
+                location.href = "/";
+                return
+            })
+        });
     </script>
 </body>
 <!-- END: Body-->
