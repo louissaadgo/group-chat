@@ -62,8 +62,7 @@
                                     <img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="user_avatar" />
                                     <span class="avatar-status-online avatar-status-xl"></span>
                                 </div>
-                                <h4 class="chat-user-name">Louis Saad</h4>
-                                <span class="user-post">@louissaad</span>
+                                <h4 class="chat-user-name" id="username-display">@</h4>
                             </div>
                             <!--/ User Information -->
                         </header>
@@ -93,7 +92,7 @@
 
                             <!-- Logout Button -->
                             <div class="mt-3">
-                                <button class="btn btn-primary">
+                                <button id="logout" class="btn btn-primary">
                                     <span>Logout</span>
                                 </button>
                             </div>
@@ -129,31 +128,6 @@
                         <div id="users-list" class="chat-user-list-wrapper list-group">
                             <h4 class="chat-list-title">Users</h4>
                             <ul class="chat-users-list chat-list media-list" id="online_users">
-                                <li>
-                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" height="42" width="42" alt="Generic placeholder image" />
-                                        <span class="avatar-status-online"></span>
-                                    </span>
-                                    <div class="chat-info flex-grow-1">
-                                        <h5 class="mb-0">Louis Saad</h5>
-                                        <p class="card-text text-truncate">
-                                            @louissaad
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" height="42" width="42" alt="Generic placeholder image" />
-                                        <span class="avatar-status-busy"></span>
-                                    </span>
-                                    <div class="chat-info flex-grow-1">
-                                        <h5 class="mb-0">Mido</h5>
-                                        <p class="card-text text-truncate">
-                                            @mido
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="no-results">
-                                    <h6 class="mb-0">No Users Found</h6>
-                                </li>
                             </ul>
                         </div>
                         <!-- Sidebar Users end -->
@@ -197,63 +171,17 @@
 
                                 <!-- User Chat messages -->
                                 <div class="user-chats">
-                                    <div class="chats">
-                                        <div class="chat"> 
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Hi MIDO I love you! 😄</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Would You marry me?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <span class="avatar box-shadow-1 cursor-pointer">
-                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
-                                                </span>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p><strong>@mido: </strong> YESSSSS :)</p>
-                                                    <p>I LOVE YOUU SO MUCH</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <span class="avatar box-shadow-1 cursor-pointer">
-                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
-                                                </span>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p><strong>@mido: </strong> But i have a bf</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Dont worry abt him :)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
+                                    <div class="chats" id="chats">   
+                                     </div>
                                 </div>
                                 <!-- User Chat messages -->
 
                                 <!-- Submit Chat form -->
                                 <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
                                     <div class="input-group input-group-merge me-1 form-send-message">
-                                        <input type="text" class="form-control message" placeholder="Type your message here." />
+                                        <input id="msg-field" type="text" class="form-control message" placeholder="Type your message here." />
                                     </div>
-                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
+                                    <button type="button" class="btn btn-primary send" id="sendBtn">
                                         <i data-feather="send" class="d-lg-none"></i>
                                         <span class="d-none d-lg-block">Send</span>
                                     </button>
@@ -300,6 +228,7 @@
 
     <script>
         let socket = null;
+        let messageField = document.getElementById("msg-field");
         document.addEventListener("DOMContentLoaded", function(){
   socket = new WebSocket("ws://"+ window.location.host + "/ws");
 
@@ -351,24 +280,19 @@
               }
               break;
           case "message":
-              o.innerHTML = o.innerHTML + data.message + "<br>";
+            let chats = document.getElementById("chats");
+             let htmln = '<div class="chat chat-left"><div class="chat-body"><div class="chat-content"><p><strong>@'+ data.username +': </strong>'+ data.message +'</p></div></div></div>'
+              chats.innerHTML = chats.innerHTML + htmln;
+              $('.user-chats').scrollTop($('.user-chats > .chats').height());
               break;
       }
   }
-  userField.addEventListener("change", function(){
-      let jsonData = {};
-      jsonData["type"] = "change_name";
-      jsonData["name"] = this.value;
-      socket.send(JSON.stringify(jsonData));
-  })
   messageField.addEventListener("keydown", function(event){
       if (event.code == "Enter"){
           if (!socket){
               console.log("No connection");
               return false
-          }
-          if(userField.value === "" || messageField.value === ""){
-          errorMessage("Fill out username and message");
+          }if(messageField.value === ""){
           return false;
       }else{
           sendMessage()
@@ -378,15 +302,37 @@
       }
   })
   document.getElementById("sendBtn").addEventListener("click", function(){
-      if(userField.value === "" || messageField.value === ""){
-          errorMessage("Fill out username and message");
+      if(messageField.value === ""){
           return false;
       }else{
           sendMessage()
       }
   })
+  document.getElementById("logout").addEventListener("click", function(){
+    const Url = window.location.origin + '/logout';
+            const otheParm={
+                method:"GET"
+            };
+            fetch(Url,otheParm)
+            .then(res=>{
+                location.href = window.location.origin + "/login";
+                return
+            })
+  })
+  function sendMessage(){
+    let htmln = '<div class="chat"><div class="chat-body"><div class="chat-content"><p>'+ messageField.value+'</p></div></div></div>'
+        chats.innerHTML = chats.innerHTML + htmln;
+        $('.user-chats').scrollTop($('.user-chats > .chats').height());
+  let jsonData = {};
+  jsonData["type"] = "message";
+  jsonData["message"] = messageField.value;
+  socket.send(JSON.stringify(jsonData));
+  messageField.value = "";
+}
 })
         $(window).on('load', function() {
+            let ele = document.getElementById("username-display");
+            ele.innerText = "@" + getCookie("token");
             if (feather) {
                 feather.replace({
                     width: 14,
@@ -394,6 +340,21 @@
                 });
             }
         })
+        function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
     </script>
 </body>
 <!-- END: Body-->
