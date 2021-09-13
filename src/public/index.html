@@ -62,8 +62,7 @@
                                     <img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="user_avatar" />
                                     <span class="avatar-status-online avatar-status-xl"></span>
                                 </div>
-                                <h4 class="chat-user-name">Louis Saad</h4>
-                                <span class="user-post">@louissaad</span>
+                                <h4 class="chat-user-name" id="username-display">@</h4>
                             </div>
                             <!--/ User Information -->
                         </header>
@@ -129,31 +128,6 @@
                         <div id="users-list" class="chat-user-list-wrapper list-group">
                             <h4 class="chat-list-title">Users</h4>
                             <ul class="chat-users-list chat-list media-list" id="online_users">
-                                <li>
-                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-11.jpg" height="42" width="42" alt="Generic placeholder image" />
-                                        <span class="avatar-status-online"></span>
-                                    </span>
-                                    <div class="chat-info flex-grow-1">
-                                        <h5 class="mb-0">Louis Saad</h5>
-                                        <p class="card-text text-truncate">
-                                            @louissaad
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="avatar"><img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" height="42" width="42" alt="Generic placeholder image" />
-                                        <span class="avatar-status-busy"></span>
-                                    </span>
-                                    <div class="chat-info flex-grow-1">
-                                        <h5 class="mb-0">Mido</h5>
-                                        <p class="card-text text-truncate">
-                                            @mido
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="no-results">
-                                    <h6 class="mb-0">No Users Found</h6>
-                                </li>
                             </ul>
                         </div>
                         <!-- Sidebar Users end -->
@@ -212,12 +186,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <span class="avatar box-shadow-1 cursor-pointer">
-                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
-                                                </span>
-                                            </div>
+                                        <div class="chat chat-left">                
                                             <div class="chat-body">
                                                 <div class="chat-content">
                                                     <p><strong>@mido: </strong> YESSSSS :)</p>
@@ -226,11 +195,6 @@
                                             </div>
                                         </div>
                                         <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <span class="avatar box-shadow-1 cursor-pointer">
-                                                    <img src="./public/app-assets/images/portrait/small/avatar-s-7.jpg" alt="avatar" height="36" width="36" />
-                                                </span>
-                                            </div>
                                             <div class="chat-body">
                                                 <div class="chat-content">
                                                     <p><strong>@mido: </strong> But i have a bf</p>
@@ -387,6 +351,8 @@
   })
 })
         $(window).on('load', function() {
+            let ele = document.getElementById("username-display");
+            ele.innerText = "@" + getCookie("token");
             if (feather) {
                 feather.replace({
                     width: 14,
@@ -394,6 +360,21 @@
                 });
             }
         })
+        function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
     </script>
 </body>
 <!-- END: Body-->
