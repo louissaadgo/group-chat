@@ -230,7 +230,7 @@
         let socket = null;
         let messageField = document.getElementById("msg-field");
         document.addEventListener("DOMContentLoaded", function(){
-  socket = new WebSocket("ws://"+ window.location.host + "/ws");
+  socket = new WebSocket("wss://"+ window.location.host + "/ws");
 
   socket.onclose = () => {
       console.log("Connection closed");
